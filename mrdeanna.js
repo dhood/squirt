@@ -6,6 +6,7 @@
           var text = article.children[i].innerHTML;
           var newText = ['<b>', text.slice(0, 1), '</b>', text.slice(1)].join('');
           article.children[i].innerHTML = newText;
+          console.log("Bolded");
         } else {
           console.log(false);
         } 
