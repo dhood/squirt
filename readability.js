@@ -193,7 +193,7 @@ var readability = {
     var stripUnlikelyCandidates = readability.flagIsActive(readability.FLAG_STRIP_UNLIKELYS),
         isPaging = (page !== null) ? true: false;
 
-    var page = document.body.cloneNode(true);
+    var page = document.body;//.cloneNode(false);
 
     var pageCacheHtml = page.innerHTML;
 
@@ -355,6 +355,7 @@ var readability = {
      * Things like preambles, content split by ads that we removed, etc.
      **/
     var articleContent        = document.createElement("DIV");
+    var articleContentElements = [];
     if (isPaging) {
       articleContent.id     = "readability-content";
     }
@@ -409,8 +410,10 @@ var readability = {
       }
 
       if(append) {
+        articleContentElements.push(siblingNode);
         dbg("Appending node: " + siblingNode);
 
+        console.log("Node appended to list");
         var nodeToAppend = null;
         if(siblingNode.nodeName !== "DIV" && siblingNode.nodeName !== "P") {
           /* We have a node that isn't a common block level element, like a form or td tag. Turn it into a div so it doesn't get filtered out later by accident. */
@@ -437,7 +440,9 @@ var readability = {
         nodeToAppend.className = "";
 
         /* Append sibling and subtract from our list because it removes the node when you append to another node */
-        articleContent.appendChild(nodeToAppend);
+        nodeToAppend_copy = nodeToAppend.cloneNode(true);
+        articleContent.appendChild(nodeToAppend_copy);
+        console.log("Node appended to div");
       }
     }
 
@@ -478,7 +483,7 @@ var readability = {
       }
     }
 
-    return articleContent;
+    return articleContentElements;
   },
 
   // with line breaks between paragraphs, and all the nice things

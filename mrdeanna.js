@@ -1,22 +1,25 @@
 (function(){
   var mrdeanna = function () {
     //var article = document.getElementsByTagName('article')[0];
-    var article = readability.grabArticle();
+    var articleElements = readability.grabArticle();
     console.log("the article is:");
-    console.log(article);
-    if (article){
-      var pEls = article.getElementsByTagName("p");
+    console.log(articleElements);
+    if (articleElements){
+      for(var j = 0; j < articleElements.length; j++) {
+        var articleElement = articleElements[j];
+      var pEls = articleElement.getElementsByTagName("p");
       for(var i = 0; i < pEls.length; i++) {
         if (pEls[i].innerText) {
-          //var text = pEls[i].innerHTML;
-          //var newText = ['<b>', text.slice(0, 1), '</b>', text.slice(1)].join('');
-          pEls[i].innerHTML = "Hi";//newText;
+          var text = pEls[i].innerHTML;
+          var newText = ['<b>', text.slice(0, 1), '</b>', text.slice(1)].join('');
+          pEls[i].innerHTML = newText;
           console.log("Bolded");
           //console.log(newText);
         } else {
           console.log(false);
         } 
       } 
+    }
     }
   }
 
