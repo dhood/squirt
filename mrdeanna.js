@@ -3,6 +3,21 @@
     return self.indexOf(value) === index;
   }
 
+  var lastItem = function(list){
+    return list[list.length - 1];
+  }
+
+  var processParagraph = function (pElem) {
+    var text = pElem.innerHTML;
+    var textItems = text.split(' ');
+    var index = 0;
+    while (index < textItems.length && lastItem(textItems[index]) != '>' ){index++};
+    if(index < textItems.length){
+      var newText = [textItems.slice(0, index) + '<b>' + textItems.slice(index, index+1) + '</b>' + textItems.slice(index+1)].join('');
+      pElem.innerHTML = newText;
+    }
+  }
+
   var mrdeanna = function () {
     var articleElements = readability.grabArticle();
     console.log("the article is:");
@@ -16,9 +31,7 @@
       pEls = pEls.filter(onlyUnique);
       for(var i = 0; i < pEls.length; i++) {
         if (pEls[i].innerText) {
-          var text = pEls[i].innerHTML;
-          var newText = ['<b>', text.slice(0, 1), '</b>', text.slice(1)].join('');
-          pEls[i].innerHTML = newText;
+          processParagraph(pEls[i]);
         }
       } 
     }
